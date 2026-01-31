@@ -7,7 +7,7 @@ RUN mvn clean package -DskipTests
 
 # Run stage
 FROM openjdk:21-ea-1-jdk-slim
-ENV MYSQ_HOST=172.18.0.2
+ENV MYSQL_HOST=172.18.0.2
 ENV MYSQL_PORT=3306
 ENV DATABASE_NAME=test
 WORKDIR /demo
