@@ -40,6 +40,7 @@ public class UserService {
 
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable Long id){
+        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         userRepository.deleteById(id);
     }
 
