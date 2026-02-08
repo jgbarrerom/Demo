@@ -16,11 +16,10 @@ public class LoadDatabase {
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
 
     @Bean
-    public CommandLineRunner initDatabase(UserRepository userRepository,
-                                         AuthUserRepository authUserRepository,
+    public CommandLineRunner initDatabase(AuthUserRepository authUserRepository,
                                          PasswordEncoder passwordEncoder) {
         return args -> {
-            if (authUserRepository.findByUsername("admin").isEmpty()) {
+            if (!authUserRepository.existsAuthUserByUsername("admin")) {
                 AuthUser admin = new AuthUser("admin", passwordEncoder.encode("admin"), "USER,ADMIN");
                 authUserRepository.save(admin);
                 log.info("Created default auth user: admin / admin");
