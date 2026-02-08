@@ -1,47 +1,58 @@
 package com.example.demo.service;
 
 import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.model.UserEntity;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.model.ImmutableUser;
+import com.example.demo.repository.ImmutableDAO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-
+import java.net.URI;
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final ImmutableDAO immutableDAO;
 
-    public UserService(UserRepository userRepository){
-        this.userRepository = userRepository;
+    public UserService(ImmutableDAO immutableDAO) {
+        this.immutableDAO = immutableDAO;
     }
 
-    @GetMapping("/users")
-    public List<UserEntity> getAllUsers(){
-        return userRepository.findAll();
+    @GetMapping
+    public List<ImmutableUser> getAllUsers(){
+        return immutableDAO.findAll();
     }
 
     @PostMapping
-    public void createUser(@RequestBody UserEntity newUser){
-        userRepository.save(newUser);
+    public ResponseEntity<ImmutableUser> createUser(@RequestBody ImmutableUser newUser){
+        var savedUser = immutableDAO.save(newUser);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(savedUser.orElseThrow().getId()).toUri();
+        return ResponseEntity.created(location).body(savedUser.orElseThrow());
     }
 
-    @GetMapping("/users/{id}")
-    public UserEntity getUserById(@PathVariable Long id){
-        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+    @GetMapping("/{id}")
+    public ImmutableUser getUserById(@PathVariable Long id){
+        return getUserByIdPrivate(id);
     }
 
-//    @PutMapping("{id}")
-//    public void updateUser(@RequestBody UserEntity newUserData, @PathVariable Long id){
-//        var oldUser = userRepository.findById(id);
-//
-//    }
+    @PutMapping("{id}")
+    public ImmutableUser updateUser(@RequestBody ImmutableUser newUserData, @PathVariable Long id){
+        var oldUser = immutableDAO.findById(id).orElseThrow(() -> new UserNotFoundException(id));
+        oldUser.setName(newUserData.getName());
+        oldUser.setLastName(newUserData.getLastName());
+        return immutableDAO.save(oldUser).orElseThrow();
+    }
 
-    @DeleteMapping("/users/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id){
-        userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
-        userRepository.deleteById(id);
+        getUserByIdPrivate(id);
+        immutableDAO.deleteById(id);
+    }
+
+    private ImmutableUser getUserByIdPrivate(Long id){
+        return immutableDAO.findById(id).orElseThrow(() -> new UserNotFoundException(id));
     }
 
 }

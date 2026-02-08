@@ -5,12 +5,16 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.AllArgsConstructor;
 
 
 @Entity(name = "USERS")
 @Getter
+@Setter
 @ToString
+@AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {
     @Id
