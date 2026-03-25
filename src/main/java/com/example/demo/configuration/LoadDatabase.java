@@ -2,7 +2,6 @@ package com.example.demo.configuration;
 
 import com.example.demo.model.AuthUser;
 import com.example.demo.repository.AuthUserRepository;
-import com.example.demo.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;

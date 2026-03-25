@@ -3,19 +3,17 @@ package com.example.demo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.AllArgsConstructor;
 
 
+@Builder(toBuilder = true)
 @Entity(name = "USERS")
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
 public class UserEntity {
     @Id
     @GeneratedValue
@@ -25,8 +23,6 @@ public class UserEntity {
 
     private String lastName;
 
-    public UserEntity(String name, String lastName){
-        this.name = name;
-        this.lastName = lastName;
-    }
 }
+
+

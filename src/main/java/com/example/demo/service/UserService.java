@@ -37,7 +37,7 @@ public class UserService {
         return getUserByIdPrivate(id);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ImmutableUser updateUser(@RequestBody ImmutableUser newUserData, @PathVariable Long id){
         var oldUser = immutableDAO.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         oldUser.setName(newUserData.getName());
