@@ -1,6 +1,6 @@
 package com.example.demo.configuration;
 
-import com.example.demo.security.JwtAuthFilter;
+import com.example.demo.core.auth.JwtAuthFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

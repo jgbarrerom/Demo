@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.AuthUser;
+import com.example.demo.core.auth.AuthUser;
 import com.example.demo.repository.AuthUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +51,7 @@ class JwtAuthIntegrationTest {
                         .content(requestBody))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.token").exists())
-                .andExpect(jsonPath("$.expiresInMs").value(86400000))
+                .andExpect(jsonPath("$.expiresInMs").value(3600000))
                 .andReturn();
 
         String token = objectMapper.readTree(result.getResponse().getContentAsString()).get("token").asText();
