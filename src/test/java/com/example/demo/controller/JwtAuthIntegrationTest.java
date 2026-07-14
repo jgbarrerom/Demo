@@ -1,13 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.DemoApplication;
 import com.example.demo.core.auth.AuthUser;
 import com.example.demo.repository.AuthUserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
@@ -17,16 +18,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
+@SpringBootTest(classes = DemoApplication.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 class JwtAuthIntegrationTest {
 
-    @Autowired
-    MockMvc mockMvc;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
-    ObjectMapper objectMapper;
+    MockMvc mockMvc;
 
     @Autowired
     AuthUserRepository authUserRepository;

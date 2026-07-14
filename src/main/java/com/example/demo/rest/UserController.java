@@ -3,6 +3,7 @@ package com.example.demo.rest;
 import com.example.demo.core.user.UserDTO;
 import com.example.demo.repository.UserDAO;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -16,7 +17,7 @@ public class UserController {
 
     private final UserDAO userDAO;
 
-    public UserController(UserDAO userDAO) {
+    public UserController(@Qualifier("userDAOImpl") UserDAO userDAO) {
         this.userDAO = userDAO;
     }
 

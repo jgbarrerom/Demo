@@ -1,9 +1,6 @@
 package com.example.demo.core.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "USERS")
@@ -24,6 +21,9 @@ public class UserEntity {
     @Column(nullable = false)
     @With
     private String lastName;
+
+    @Version
+    private Integer version;//control de concurrencia automatico
 
     public UserEntity(String name, String lastName) {
         this.name = name;
