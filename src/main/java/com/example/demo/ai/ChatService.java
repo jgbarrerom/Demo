@@ -2,6 +2,7 @@ package com.example.demo.ai;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Service
 public class ChatService {
@@ -12,7 +13,7 @@ public class ChatService {
         this.chatClient = chatClientBuilder.build();
     }
 
-    public String consulta(String message){
-        return chatClient.prompt().user(message).call().content();
+    public Flux<String> consulta(String message){
+        return chatClient.prompt().user(message).stream().content();
     }
 }

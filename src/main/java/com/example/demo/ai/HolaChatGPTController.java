@@ -1,8 +1,11 @@
 package com.example.demo.ai;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/ai-chat")
 public class HolaChatGPTController {
 
@@ -11,8 +14,8 @@ public class HolaChatGPTController {
         this.chatService = chatService;
     }
 
-    @GetMapping
-    public String consultaPost(@RequestParam String message){
+    @GetMapping(produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> consultaPost(@RequestParam String message){
         return chatService.consulta(message);
     }
 }
